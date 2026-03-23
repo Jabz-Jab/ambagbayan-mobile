@@ -1,0 +1,608 @@
+/* sizing */
+:root {
+  --headerH: 96px;
+  --containerW: min(1760px, 96%);
+  --gap: clamp(20px, 2.4vw, 32px);
+  --bandPadTop: clamp(16px, 2.2vw, 24px);
+  --bandPadBottom: clamp(16px, 2.2vw, 24px);
+}
+
+/* Layout */
+.donors-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+/* Hero */
+.donors-hero {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px clamp(18px, 4.6vw, 48px);
+  min-height: var(--headerH);
+  background: #ffffff;
+  color: #0b1220;
+  border-bottom: 1px solid #e5eaf5;
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.05);
+}
+
+.hero-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-title .fi {
+  font-size: 1.2em;
+  line-height: 0;
+}
+
+.cta {
+  background: linear-gradient(178deg, #00000099 0%, #000000 95%);
+  color: #fff;
+  font-weight: 800;
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+.cta + .cta {
+  margin-left: 8px;
+}
+
+/* main band (LEFT narrower, RIGHT wider like DonorDetail) */
+.donors-band {
+  width: var(--containerW);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr);
+  gap: var(--gap);
+  padding: var(--bandPadTop) 0 var(--bandPadBottom);
+  align-items: stretch;
+  box-sizing: border-box;
+  min-height: 0;
+  flex: 1;
+}
+
+.panel.left,
+.panel.right {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* cards */
+.card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.05);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.donations-card {
+  height: calc(
+    100dvh - var(--headerH) - var(--bandPadTop) - var(--bandPadBottom)
+  );
+  min-height: 460px;
+}
+
+/* card header */
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #eef2ff;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 5;
+}
+
+.title {
+  font-weight: 800;
+  color: #0f172a;
+}
+.count-pill {
+  margin-left: 8px;
+  background: #eef2ff;
+  color: #1e293b;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.card-desc {
+  padding: 0 12px 8px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #64748b;
+}
+
+/* filters */
+.filters {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filters input,
+.filters select {
+  padding: 7px 10px;
+  border-radius: 10px;
+  border: 1px solid #dfe6ff;
+  background: #f7f9ff;
+  outline: none;
+  min-width: 170px;
+  font-size: 13px;
+}
+
+/* scroll area */
+.donations-scroll {
+  flex: 1;
+  overflow: auto;
+  padding: 10px 12px 0;
+  -webkit-overflow-scrolling: touch;
+}
+.donor-detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+
+/* row */
+.donor-detail-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid #eef2ff;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(17, 24, 39, 0.03);
+}
+
+/* thumb */
+.thumb {
+  width: 100%;
+  height: 112px;
+}
+.thumb-fallback {
+  width: 100%;
+  height: 100%;
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+.donation-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* collage */
+.img-grid {
+  display: grid;
+  gap: 4px;
+  height: 112px;
+}
+.img-grid.two {
+  grid-template-columns: repeat(2, 1fr);
+}
+.img-grid.four {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+.img-cell {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.img-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.more-badge {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border-radius: 8px;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+/* dinfo */
+.dinfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 4px;
+}
+
+/* donor chip */
+.donor-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.donor-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #e6eafc;
+  box-shadow: 0 2px 8px rgba(2, 6, 23, 0.06);
+}
+.chip-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e5e7eb;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e6eafc;
+}
+.chip-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.chip-fallback {
+  font-size: 11px;
+  font-weight: 900;
+  color: #1a2140;
+}
+.chip-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* title + header */
+.dtitle {
+  font-weight: 800;
+  color: #111827;
+  word-break: break-word;
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+}
+
+/* title + pills left, status/button right */
+.dheader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.dheader-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.dheader-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* pills */
+.dpills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.dpills .pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #0f172a;
+  font-size: 11px;
+  font-weight: 600;
+}
+.pill.kind.posting {
+  background: #e0f2fe;
+}
+.pill.kind.direct {
+  background: #fff7ed;
+}
+.pill.kind.request {
+  background: #ecfccb;
+}
+.pill.cat.food {
+  background: #e0e7ff;
+}
+.pill.cat.clothes {
+  background: #ffedd5;
+}
+.pill.cat.essential {
+  background: #d1fae5;
+}
+
+/* status badge */
+.status-badge {
+  background: #f1f5f9;
+  color: #0f172a;
+  font-size: 12px;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  margin-top: 0;
+  margin-bottom: 2px;
+}
+.status-badge.completed {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+.status-badge.pending {
+  background: #e0f2fe;
+  color: #075985;
+  border-color: #bae6fd;
+}
+.status-badge.declined {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+.status-badge.accepted,
+.status-badge.posted {
+  background: #f3f4f6;
+  color: #1f2937;
+  border-color: #e5e7eb;
+}
+
+/* meta */
+.meta {
+  color: #475569;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+
+/* button */
+.btn.btn-view {
+  background: #000000;
+  color: #ffffff;
+  border: 0;
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+  transition: background 0.15s ease, transform 0.08s ease;
+}
+.btn.btn-view:hover {
+  background: #111111;
+  transform: translateY(-1px);
+}
+.btn.btn-view:active {
+  transform: translateY(0);
+}
+.btn.btn-view:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+
+.empty {
+  padding: 12px;
+  color: #64748b;
+}
+
+/* right panel */
+.panel.right .card {
+  overflow: hidden;
+}
+
+/* status summary */
+.status-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.status-box {
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.status-label {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 600;
+}
+.status-value {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1c3c80;
+}
+.status-box.pending .status-value {
+  color: #df9930;
+}
+.status-box.completed .status-value {
+  color: #15803d;
+}
+.status-box.declined .status-value {
+  color: #b91c1c;
+}
+
+/* DAILY ACTIVITY FOOTPRINT CARD */
+.footprint-card {
+  margin-top: 6px;
+}
+
+.footprint-filters select {
+  min-width: 150px;
+}
+
+/* Simple bar graph inside Daily Activity Footprint */
+.footprint-graph {
+  padding: 4px 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footprint-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footprint-bar-label {
+  width: 72px;
+  font-size: 12px;
+  color: #4b5563;
+  flex-shrink: 0;
+}
+
+.footprint-bar-track {
+  flex: 1;
+  height: 16px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  overflow: hidden;
+}
+
+.footprint-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #4c63d2, #22c55e);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 6px;
+  font-size: 11px;
+  color: #ffffff;
+}
+
+.footprint-bar-value {
+  font-weight: 700;
+}
+
+.empty-graph {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* Snapshot / matrix table (Daily Activity Footprint) */
+.snapshot-table-wrap {
+  width: 100%;
+  padding: 0 12px 12px;
+  overflow-x: auto;
+}
+
+.snapshot-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.snapshot-table th,
+.snapshot-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.snapshot-table th:first-child,
+.snapshot-table td:first-child {
+  text-align: left;
+}
+
+.snapshot-table thead th {
+  background: #f9fafb;
+  font-weight: 700;
+  color: #4b5563;
+}
+
+.snapshot-table tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+/* (old chart / org-analytics-band styles can stay or be removed; now unused) */
+
+/* responsive */
+@media (max-width: 1280px) {
+  :root {
+    --headerH: 100px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .donors-band {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .donations-card {
+    height: calc(100vh - var(--headerH) - 60px);
+  }
+  .receipt {
+    grid-template-columns: 1fr;
+  }
+  .receipt-img img,
+  .receipt-img-fallback {
+    height: 200px;
+  }
+  .lightbox-prev {
+    left: 8px;
+  }
+  .lightbox-next {
+    right: 8px;
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --headerH: 108px;
+  }
+  .donor-detail-row {
+    grid-template-columns: 1fr;
+  }
+  .thumb {
+    height: 200px;
+  }
+  .img-grid,
+  .donation-thumb {
+    height: 200px;
+  }
+  .filters input,
+  .filters select {
+    min-width: 140px;
+  }
+  .status-summary-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

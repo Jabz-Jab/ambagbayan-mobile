@@ -1,0 +1,448 @@
+/* ==================== Dashboard.css — AmbagBayan Themed (Refactored) ==================== */
+/* ---------- Design Tokens ---------- */
+:root{
+  --container-w: min(1760px, 96%);
+  --nav-radius: 12px;            /* ← adjust navbar button corner radius here */
+}
+
+/* ---------- Reduced Motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  :root{ --duration:0s; }
+  *{ animation:none !important; transition:none !important; }
+}
+
+/* ---------- Page ---------- */
+.dash{
+  min-height:100vh; display:flex; flex-direction:column;
+ 
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  display:grid;
+  grid-template-columns:auto 1fr; /* title (auto) | nav (fills) */
+  align-items:center;
+  gap:clamp(16px,3vw,36px);
+  padding:clamp(14px,2.6vw,30px) calc((100% - var(--container-w))/2);
+  position:sticky; top:0; z-index:5;
+  box-shadow:0 8px 30px rgba(76,99,210,.08);
+}
+
+/* left title */
+.hero-title{
+  margin:0;
+  padding:0;
+  border:none;
+  outline:none;
+  box-shadow:none;
+  border-radius:0;
+  background:none;
+  font-weight:800;
+  font-size:clamp(22px,3.2vw,36px);
+  letter-spacing:.2px;
+  color:#000;
+  -webkit-background-clip:initial;
+  background-clip:initial;
+  -webkit-text-fill-color:#000;
+}
+.hero-title.is-gradient{
+  background:black;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:black;
+}
+.hero-title, .hero-title *{
+  border:none !important;
+  box-shadow:none !important;
+}
+
+/* right-aligned nav */
+.hero-cta{
+  justify-self:end;
+  display:flex; align-items:center;
+  gap:clamp(8px,1vw,12px);
+  flex-wrap:wrap;
+}
+
+/* === Nav buttons: NOT fully rounded pills === */
+.hero-cta button.cta{
+  border-radius: 7px;
+}
+
+/* ==== NAV HOVER + ACTIVE STATES ==== */
+:root{
+  --nav-radius: 12px;          /* corners */
+  --nav-active-bg: #777696;    /* active: near-black slate */
+  --nav-active-fg: #ffffff;
+}
+
+/* force smaller corners on nav buttons */
+.hero-cta :is(.cta, a.cta, button.cta){ 
+border-radius: var(--nav-radius) !important; 
+}
+
+/* hover → gray */
+.hero-cta :is(.cta, a.cta, button.cta):hover,   
+.hero-cta :is(.cta, a.cta, button.cta):focus-visible{
+  background:#ffffff !important;   /* gray */
+  color:#1415169e !important;
+}
+/* PERSISTENT ACTIVE (after navigation) */
+.hero-cta .cta.is-active,
+.hero-cta .cta[aria-current="page"]{
+  background: linear-gradient(178deg, #4c63d2 0%, #22346f 95%);
+  color:var(--nav-active-fg) !important;
+  border-color:var(--nav-active-bg) !important;
+}
+
+/* keep active color even when hovered */
+.hero-cta .cta.is-active:hover,
+.hero-cta .cta[aria-current="page"]:hover{
+  background:var(--nav-active-bg) !important;
+  color:var(--nav-active-fg) !important;
+  transform:none; filter:none;
+}
+
+
+/* optional: small screens stack */
+@media (max-width: 640px){
+  .hero{ grid-template-columns:1fr; gap:12px; }
+  .hero-cta{ justify-self:start; }
+}
+/* Lift + color change on hover/focus */
+@media (hover: hover){
+  .hero-cta .cta:hover{
+    transform:translateY(-3px);
+    box-shadow:0 16px 34px rgba(23,30,70,.16), inset 0 1px 0 rgba(255,255,255,.75);
+    filter:saturate(1.06); border-color:#d7ddf6;
+  }
+}
+.hero-cta .cta:focus-visible{
+  transform:translateY(-3px);
+  box-shadow:0 16px 34px rgba(23,30,70,.16), inset 0 1px 0 rgba(255,255,255,.75);
+  filter:saturate(1.06); border-color:#d7ddf6;
+}
+.hero-cta .cta:active{
+  transform:translateY(-1px);
+  box-shadow:0 10px 22px rgba(23,30,70,.12);
+}
+
+/* 0) Global: never allow horizontal scroll */
+html, body, #root, .dash{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;           /* kill the 1–2px h-scroll */
+}
+
+/* 1) Hero: use simple, boxed padding (no calc that causes rounding overflow) */
+.hero{
+  box-sizing:border-box;
+  width:100%;
+  grid-template-columns: 1fr auto;          /* title grows | nav auto */
+  padding: clamp(12px,1.8vw,20px) clamp(16px,4vw,48px);  /* replaces calc(...) */
+}
+
+/* 3) Optional: if you *really* want container-like edges without overflow,
+   clamp the calc to never go negative on browsers that support `max()` */
+@supports (padding: max(0px)){
+  .hero{
+    padding-inline: max(16px, calc((100% - var(--container-w)) / 2));
+  }
+}
+
+/* ---------- Charts Band ---------- */
+.band{
+  padding:clamp(20px,3.6vw,25px) 0 clamp(26px,4.2vw,52px);
+}
+.band-inner{
+  width:min(1200px,92%);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(16px,2.6vw,20px);
+  
+}
+
+/* ---------- Cards (glass + top accent) ---------- */
+.card{
+  background:white;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  padding:clamp(14px,1.9vw,20px);
+  min-width:0;
+  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease);
+  backdrop-filter: saturate(80%) blur(1px);
+  position:relative;
+}
+.card:before{
+  content:"";
+  position:absolute; inset:0 0 auto 0; height:4px; border-radius:inherit;
+  opacity:.7;
+  box-shadow: var(--shadow-sm);
+
+}
+.card-title{
+  margin:0 0 8px;
+  font-size:var(--h3);
+  font-weight:800;
+  color:var(--text);
+  letter-spacing:.01em;
+}
+
+/* ---------- Chart Containers ---------- */
+.chart-body{
+  height:clamp(260px, 38vh, 420px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: white
+    linear-gradient(180deg,var(--panel-2), #fff);
+  border:1px dashed var(--border-soft);
+  border-radius:calc(var(--radius) - 8px);
+  padding:clamp(10px,1.7vw,16px);
+}
+
+/* Chart.js canvases */
+canvas{ max-width:100%; }
+
+/* ---------- Responsiveness ---------- */
+@media (max-width: 980px){
+  .band-inner{ grid-template-columns:1fr; }
+  .chart-body{ height:clamp(240px,36vh,380px); }
+}
+@media (max-width: 720px){
+  .hero{
+    grid-template-columns:1fr;
+    justify-items:center;
+    text-align:center;
+    gap:clamp(12px,3vw,18px);
+  }
+  .hero-logo{ width:clamp(120px,36vw,200px); }
+}
+
+/* ---------- Focus & Micro-interactions ---------- */
+.cta:focus-visible,
+.card:focus-within{
+  outline:3px solid rgba(76,99,210,.45);
+  outline-offset:2px;
+  border-color:#cfd7ff;
+}
+.cta:active{ transform: translateY(0); }
+
+/* ===== NAV: make it bigger (no JSX changes) ===== */
+:root{
+  --nav-font: clamp(16px, 1.2vw, 20px);      /* text size */
+  --nav-pad-y: 14px;                          /* vertical padding */
+  --nav-pad-x: 22px;                          /* horizontal padding */
+  --nav-gap: clamp(10px, 1.6vw, 20px);        /* space between buttons */
+  --nav-radius: 100px;                          /* rounder corners */
+}
+
+.hero{                                     /* keep header comfy, no h-scroll */
+  width:100%; box-sizing:border-box;
+  padding: clamp(12px,1.8vw,20px) clamp(16px,4vw,48px);
+  grid-template-columns: 1fr auto;         /* title | nav */
+}
+
+.hero-cta{
+  gap: var(--nav-gap);
+  flex-wrap: wrap;                          /* wraps instead of causing overflow */
+}
+
+.hero-cta .cta{
+  font-size: var(--nav-font);
+  padding: var(--nav-pad-y) var(--nav-pad-x);
+  border-radius: var(--nav-radius) !important;
+  line-height: 1.1;
+  min-height: calc(var(--nav-pad-y)*2 + 1.1em);
+  min-width: clamp(120px, 12vw, 180px);     /* makes each button feel substantial */
+  box-shadow: 0 6px 18px rgba(0,0,0,.12);   /* a bit more presence */
+}
+
+
+
+/* Prevent horizontal scroll just in case */
+html, body, #root, .dash{ max-width:100%; overflow-x:hidden; }
+
+/* Scale back slightly on small screens so it still fits */
+@media (max-width: 720px){
+  :root{
+    --nav-font: 15px;
+    --nav-pad-y: 10px;
+    --nav-pad-x: 16px;
+    --nav-gap: 10px;
+    --nav-radius: 14px;
+  }
+}
+
+
+/* ---------- Helper: force Chart axes to use text color ---------- */
+:root{ --axis-text: var(--text-subtle); }
+/* ---------- KPI Tiles (like the screenshot) ---------- */
+.kpi-band{
+  padding: clamp(18px, 2.8vw, 26px) 0 0;
+  margin-top: 2px;
+  
+}
+.kpi-grid{
+  width:min(1200px,92%);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:clamp(14px,2vw,20px);
+}
+.kpi-card{
+  background:white;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  padding:clamp(14px,1.9vw,20px);
+  min-width:0;
+  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease);
+  backdrop-filter: saturate(180%) blur(3px);
+  position:relative;
+}
+.kpi-title{
+  font-weight:800; color:var(--text); letter-spacing:.01em;
+}
+.kpi-number{
+  font-size: clamp(42px, 6vw, 64px);
+  line-height: 1; font-weight: 900; color: var(--text);
+}
+.kpi-sub{
+  color: var(--text-muted);
+}
+.kpi-trend{
+  margin-top: 6px;
+  font-size: 14px;
+  border-radius: 12px;
+  padding: 8px 10px;
+  background: #f8fafc;
+  border: 1px dashed var(--border-soft);
+  color: #475569;
+}
+.kpi-trend.up{ background: rgba(24,161,90,.10); color:#065f46; border-color: rgba(24,161,90,.25); }
+.kpi-trend.down{ background: rgba(194,59,55,.10); color:#7f1d1d; border-color: rgba(194,59,55,.25); }
+.kpi-trend.flat{ background: rgba(245,158,11,.10); color:#7c2d12; border-color: rgba(245,158,11,.25); }
+
+@media (max-width: 980px){
+  .kpi-grid{ grid-template-columns:1fr; }
+}
+/* 1) Reserve vertical scrollbar space → viewport width no longer jumps */
+html { scrollbar-gutter: stable both-edges; }
+/* Fallback if you need it everywhere:
+   body { overflow-y: scroll; } */
+
+/* 2) Keep header height steady even if fonts wrap/hover states happen */
+.hero { min-height: 72px; box-sizing: border-box; }
+
+/* 3) Active page button: don't let it re-trigger clicks & don't bounce on press */
+.hero-cta .cta.is-active {
+  pointer-events: none;                 /* can't click the active tab */
+}
+.hero-cta .cta:active {
+  transform: none !important;           /* no down-press nudge */
+  box-shadow: none !important;
+}
+
+/* 4) Make transforms GPU-stable without affecting layout */
+.hero-cta .cta {
+  will-change: transform;
+  transform: translateZ(0);
+}
+/* 1) base circle logout button */
+/* === LOGOUT BUTTON OVERRIDE (always win) === */
+/* Flat Logout Button — no lift, no shadow, no black stroke */
+.hero-cta .cta-logout {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 999px;
+  background: #4c63d2; /* solid blue tone, not gradient */
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  gap: 0;
+  border: none;          /* remove black stroke */
+  outline: none;         /* remove outline ring */
+  box-shadow: none;      /* no shadow */
+  transform: none;       /* no lift */
+}
+
+/* Hover/focus: red, still flat */
+.hero-cta .cta-logout:hover,
+.hero-cta .cta-logout:focus-visible {
+  background: #ef4444; /* red */
+  color: #fff;
+  border: none;
+  box-shadow: none;
+  transform: none;
+  outline: none;
+}
+
+/* Prevent inherited hover styles */
+.hero-cta .cta-logout.cta:hover,
+.hero-cta .cta-logout.cta:focus-visible {
+  background: #ef4444;
+  color: #fff;
+    transform:none;
+  box-shadow:none;
+}
+
+/* ===== Logout Confirm Modal ===== */
+.modal-overlay{
+  position: fixed; inset: 0;
+  background: rgba(15, 23, 42, .45);
+  display: grid; place-items: center;
+  z-index: 50;
+}
+.modal-card{
+  width: min(92vw, 420px);
+  background: #ffffff;
+  border: 1px solid var(--border, #e6e9f2);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(23,30,70,.25);
+  padding: 20px;
+}
+.modal-title{
+  margin: 0 0 6px;
+  font-weight: 800;
+  font-size: clamp(18px, 2vw, 22px);
+  color: var(--text, #0b1220);
+}
+.modal-sub{
+  margin: 0 0 16px;
+  color: var(--text-muted, #475569);
+}
+.modal-actions{
+  display: flex; justify-content: flex-end; gap: 10px;
+}
+/* buttons */
+.btn{
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 700;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.btn.ghost{
+  background: #fff;
+  border-color: var(--border, #e6e9f2);
+  color: #0b1220;
+}
+.btn.ghost:hover{ background: #f8fafc; }
+.btn.danger{
+  background: #ef4444;
+  color: #fff;
+}
+.btn.danger:hover{ filter: brightness(0.95); }
+
+/* keep actions flat (no lift) */
+.btn:hover, .btn:focus-visible, .btn:active{
+  transform: none !important;
+  box-shadow: none !important;
+}
+
